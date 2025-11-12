@@ -1,6 +1,5 @@
 <<<<<<< HEAD
-# -Project-Blog-or-Newsletter
-Test Project of  Project Blog or Newsletter
+# Project-Blog-or-Newsletter
 =======
 # ChatKit Starter Template
 
