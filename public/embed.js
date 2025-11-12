@@ -1,6 +1,6 @@
 (function () {
-  const CHATBOT_URL = "https://test-project-blog-or-newsletter.vercel.app/"; // replace with your Vercel chatbot link
-  const THEME_COLOR = "#2563eb"; // your brand color
+  const CHATBOT_URL = "https://test-project-blog-or-newsletter.vercel.app/"; // replace with your actual Vercel chatbot link
+  const THEME_COLOR = "#D04B2A"; // Bastad Grill brand-colour
   const TEXT_COLOR = "#ffffff";
 
   // === CREATE IFRAME (hidden by default) ===
@@ -42,8 +42,8 @@
       transition: all 0.25s ease;
       font-family: system-ui, sans-serif;
     ">
-      <img src="https://cdn-icons-png.flaticon.com/512/4712/4712104.png" alt="AI" style="width:28px; height:28px; border-radius:50%; margin-right:10px;">
-      <span style="font-weight:500;">Chat with AI Assistant 💬</span>
+      <img src="https://www.bastadgrill.com/wp-content/uploads/2025/04/Screenshot-2025-04-26-22.15.49-1.png" alt="AI" style="width:28px; height:28px; border-radius:50%; margin-right:10px;">
+      <span style="font-weight:500;">Chat with us 💬</span>
     </div>
   `;
   document.body.appendChild(dock);
@@ -67,7 +67,7 @@
       iframe.style.opacity = "0";
       iframe.style.transform = "translateY(20px)";
       setTimeout(() => (iframe.style.display = "none"), 250);
-      dockEl.querySelector("span").textContent = "Chat with AI Assistant 💬";
+      dockEl.querySelector("span").textContent = "Chat with us 💬";
     }
   };
 })();
