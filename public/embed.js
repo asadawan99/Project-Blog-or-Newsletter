@@ -1,74 +1,73 @@
 (function () {
-  // --- CONFIGURATION ---
-  const CHATBOT_URL = "https://test-project-blog-or-newsletter.vercel.app/"; // <-- replace with your deployed agent link
-  const WIDGET_COLOR = "#2563eb"; // Tailwind blue-600
-  const BUTTON_SIZE = "60px";
+  const CHATBOT_URL = "https://test-project-blog-or-newsletter.vercel.app/"; // replace with your Vercel chatbot link
+  const THEME_COLOR = "#2563eb"; // your brand color
+  const TEXT_COLOR = "#ffffff";
 
-  // --- CREATE CHAT IFRAME ---
+  // === CREATE IFRAME (hidden by default) ===
   const iframe = document.createElement("iframe");
   Object.assign(iframe.style, {
     position: "fixed",
-    bottom: "90px",
-    right: "25px",
-    width: "380px",
-    height: "520px",
+    bottom: "80px",
+    right: "20px",
+    width: "420px",
+    height: "580px",
     border: "none",
     borderRadius: "16px",
-    boxShadow: "0 8px 24px rgba(0,0,0,0.25)",
+    boxShadow: "0 8px 24px rgba(0,0,0,0.3)",
     zIndex: "9999",
-    transition: "all 0.3s ease",
     display: "none",
+    opacity: "0",
+    transform: "translateY(20px)",
+    transition: "all 0.3s ease",
   });
   iframe.src = CHATBOT_URL;
   document.body.appendChild(iframe);
 
-  // --- CREATE FLOATING BUTTON ---
-  const button = document.createElement("button");
-  button.innerHTML = "💬";
-  Object.assign(button.style, {
-    position: "fixed",
-    bottom: "25px",
-    right: "25px",
-    width: BUTTON_SIZE,
-    height: BUTTON_SIZE,
-    borderRadius: "50%",
-    border: "none",
-    backgroundColor: WIDGET_COLOR,
-    color: "white",
-    fontSize: "26px",
-    cursor: "pointer",
-    zIndex: "10000",
-    boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
-    transition: "all 0.2s ease-in-out",
-  });
-  document.body.appendChild(button);
+  // === FOOTER CHAT DOCK ===
+  const dock = document.createElement("div");
+  dock.innerHTML = `
+    <div style="
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: ${THEME_COLOR};
+      color: ${TEXT_COLOR};
+      border-radius: 12px;
+      padding: 10px 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      z-index: 10000;
+      transition: all 0.25s ease;
+      font-family: system-ui, sans-serif;
+    ">
+      <img src="https://cdn-icons-png.flaticon.com/512/4712/4712104.png" alt="AI" style="width:28px; height:28px; border-radius:50%; margin-right:10px;">
+      <span style="font-weight:500;">Chat with AI Assistant 💬</span>
+    </div>
+  `;
+  document.body.appendChild(dock);
 
-  // --- BUTTON HOVER EFFECT ---
-  button.onmouseover = () => {
-    button.style.transform = "scale(1.1)";
-  };
-  button.onmouseout = () => {
-    button.style.transform = "scale(1)";
-  };
+  const dockEl = dock.querySelector("div");
+  dockEl.onmouseover = () => (dockEl.style.transform = "scale(1.05)");
+  dockEl.onmouseout = () => (dockEl.style.transform = "scale(1)");
 
-  // --- TOGGLE CHAT WIDGET ---
-  let isOpen = false;
-  button.onclick = () => {
-    isOpen = !isOpen;
-    iframe.style.display = isOpen ? "block" : "none";
-    button.innerHTML = isOpen ? "✖️" : "💬";
-  };
-
-  // --- OPTIONAL: AUTO-CLOSE WHEN CLICKING OUTSIDE ---
-  document.addEventListener("click", (e) => {
-    if (
-      isOpen &&
-      !iframe.contains(e.target) &&
-      !button.contains(e.target)
-    ) {
-      iframe.style.display = "none";
-      button.innerHTML = "💬";
-      isOpen = false;
+  // === TOGGLE CHAT ===
+  let open = false;
+  dockEl.onclick = () => {
+    open = !open;
+    if (open) {
+      iframe.style.display = "block";
+      setTimeout(() => {
+        iframe.style.opacity = "1";
+        iframe.style.transform = "translateY(0)";
+      }, 20);
+      dockEl.querySelector("span").textContent = "Close Chat ✖️";
+    } else {
+      iframe.style.opacity = "0";
+      iframe.style.transform = "translateY(20px)";
+      setTimeout(() => (iframe.style.display = "none"), 250);
+      dockEl.querySelector("span").textContent = "Chat with AI Assistant 💬";
     }
-  });
+  };
 })();
